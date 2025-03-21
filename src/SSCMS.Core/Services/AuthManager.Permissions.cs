@@ -162,7 +162,7 @@ namespace SSCMS.Core.Services
 
         public async Task<bool> HasAppPermissionsAsync(params string[] permissions)
         {
-            if (await IsSiteAdminAsync()) return true;
+            if (await IsSuperAdminAsync()) return true;
 
             var permissionList = await GetAppPermissionsAsync();
             return permissions.Any(permission => permissionList.Contains(permission));
@@ -197,7 +197,7 @@ namespace SSCMS.Core.Services
 
         public async Task<bool> HasSitePermissionsAsync(int siteId, params string[] permissions)
         {
-            if (await IsSiteAdminAsync()) return true;
+            // if (await IsSiteAdminAsync()) return true;
             var dict = await GetSitePermissionDictAsync();
             if (!dict.ContainsKey(siteId)) return false;
 

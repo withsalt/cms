@@ -2,7 +2,6 @@
 var $urlUpdate = $url + '/actions/update';
 var $urlDelete = $url + '/actions/delete';
 var $urlDeleteGroup = $url + '/actions/deleteGroup';
-var $urlPull = $url + '/actions/pull';
 var $urlDownload = $url + '/actions/download';
 
 var data = utils.init({
@@ -93,25 +92,6 @@ var methods = {
       var res = response.data;
 
       utils.success('图片素材删除成功！');
-      $this.apiGet(1);
-    }).catch(function (error) {
-      utils.error(error);
-    }).then(function () {
-      utils.loading($this, false);
-    });
-  },
-
-  apiPull: function () {
-    var $this = this;
-
-    utils.loading(this, true);
-    $api.post($urlPull, {
-      siteId: this.siteId,
-      groupId: this.form.groupId
-    }).then(function (response) {
-      var res = response.data;
-
-      utils.success('公众号图片素材拉取成功！');
       $this.apiGet(1);
     }).catch(function (error) {
       utils.error(error);
@@ -233,19 +213,6 @@ var methods = {
       utils.error(error);
     }).then(function () {
       utils.loading($this, false);
-    });
-  },
-
-  btnPullClick: function() {
-    var $this = this;
-
-    utils.alertDelete({
-      title: '拉取公众号图片素材',
-      text: '此操作将拉取公众号图片素材，确定吗？',
-      button: '确 定',
-      callback: function () {
-        $this.apiPull();
-      }
     });
   },
 

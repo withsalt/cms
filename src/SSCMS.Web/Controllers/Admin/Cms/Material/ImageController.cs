@@ -19,7 +19,6 @@ namespace SSCMS.Web.Controllers.Admin.Cms.Material
         private const string RouteUpdate = "cms/material/image/actions/update";
         private const string RouteDelete = "cms/material/image/actions/delete";
         private const string RouteDeleteGroup = "cms/material/image/actions/deleteGroup";
-        private const string RoutePull = "cms/material/image/actions/pull";
         private const string RouteDownload = "cms/material/image/actions/download";
 
         private readonly ISettingsManager _settingsManager;
@@ -96,11 +95,6 @@ namespace SSCMS.Web.Controllers.Admin.Cms.Material
         public class DownloadRequest : SiteRequest
         {
             public int Id { get; set; }
-        }
-
-        public class PullRequest : SiteRequest
-        {
-            public int GroupId { get; set; }
         }
     }
 }
