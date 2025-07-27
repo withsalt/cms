@@ -21,7 +21,7 @@ namespace SSCMS.Core.Utils
             }
             if (string.IsNullOrEmpty(securityKey))
             {
-                securityKey = StringUtils.GetSecurityKey();
+                securityKey = EncryptUtils.GenerateSecurityKey();
             }
             if (corsOrigins == null)
             {
@@ -123,14 +123,14 @@ namespace SSCMS.Core.Utils
                     var json = FileUtils.ReadText(filePath);
                     if (json.Contains(@"""SecurityKey"": """","))
                     {
-                        var securityKey = StringUtils.GetSecurityKey();
+                        var securityKey = EncryptUtils.GenerateSecurityKey();
                         FileUtils.WriteText(filePath,
                             json.Replace(@"""SecurityKey"": """",", $@"""SecurityKey"": ""{securityKey}"","));
                     }
                 }
                 else
                 {
-                    var securityKey = StringUtils.GetSecurityKey();
+                    var securityKey = EncryptUtils.GenerateSecurityKey();
 
                     SaveSettings(contentRootPath, false, false, false, securityKey, DatabaseType.MySql.GetValue(),
                         string.Empty, string.Empty, string.Empty, null, null, false, null);
@@ -138,7 +138,7 @@ namespace SSCMS.Core.Utils
             }
         }
 
-        public static string GetRedisConnectionString(string redisHost, bool isRedisDefaultPort, int redisPort, bool isSsl, string redisPassword)
+        public static string GetRedisConnectionString(string redisHost, bool isRedisDefaultPort, int redisPort, bool isSsl, string redisPassword, string redisDatabase)
         {
             var connectionString = string.Empty;
             if (!string.IsNullOrEmpty(redisHost))
@@ -156,6 +156,10 @@ namespace SSCMS.Core.Utils
                 if (!string.IsNullOrEmpty(redisPassword))
                 {
                     connectionString += $",password={redisPassword}";
+                }
+                if (!string.IsNullOrEmpty(redisDatabase))
+                {
+                    connectionString += $",defaultDatabase={redisDatabase}";
                 }
             }
 
